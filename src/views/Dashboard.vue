@@ -6,8 +6,8 @@
             <ScatterPlot
                 v-for="([key1, key2], index) in keyPairs"
                 :key="index"
-                :xAxis="key2"
-                :yAxis="key1"
+                :yKey="key1"
+                :xKey="key2"
             />
         </div>
     </div>

@@ -1,5 +1,5 @@
 <template>
-    <div class="about">
+    <div class="dashboard">
         <button @click="generateData">Generate New Data</button>
 
         <div>
@@ -17,7 +17,7 @@ import ScatterPlot from '@/components/ScatterPlot.vue';
 import { Columns } from '@/store';
 
 export default defineComponent({
-    name: 'About',
+    name: 'Dashboard',
     components: {
         ScatterPlot
     },

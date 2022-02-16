@@ -1,20 +1,18 @@
 <template>
-    <div class="wrapper">
-        <svg :width="width" :height="height">
-            <g></g>
-            <g></g>
-            <g>
-                <circle
-                    v-for="(point, index) in points"
-                    :key="index"
-                    :cx="point[0]"
-                    :cy="point[1]"
-                    @click="onClick(index)"
-                    :class="getCssClass(index)"
-                />
-            </g>
-        </svg>
-    </div>
+    <svg :width="width" :height="height">
+        <g></g>
+        <g></g>
+        <g>
+            <circle
+                v-for="([x, y], index) in points"
+                :key="index"
+                :cx="x"
+                :cy="y"
+                @click="onClick(index)"
+                :class="getCssClass(index)"
+            />
+        </g>
+    </svg>
 </template>
 
 <script lang="ts">
@@ -58,12 +56,10 @@ export default defineComponent({
 
 <!-- Add "scoped" attribute tod limit CSS to this component only -->
 <style scoped lang="scss">
-.wrapper {
-    background: bisque;
-}
-
 svg {
     border: solid black 1px;
+    background: bisque;
+    margin: 40px;
 }
 
 circle {

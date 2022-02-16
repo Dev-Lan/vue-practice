@@ -1,11 +1,14 @@
 <template>
-    <div class="dashboard">
+    <div>
         <button @click="generateData">Generate New Data</button>
 
-        <div>
-            <ScatterPlot :xAxis="'A'" :yAxis="'B'" />
-            <ScatterPlot :xAxis="'A'" :yAxis="'C'" />
-            <ScatterPlot :xAxis="'B'" :yAxis="'C'" />
+        <div class="dashboard">
+            <ScatterPlot
+                v-for="([key1, key2], index) in keyPairs"
+                :key="index"
+                :xAxis="key2"
+                :yAxis="key1"
+            />
         </div>
     </div>
 </template>
@@ -34,6 +37,25 @@ export default defineComponent({
             }
             this.$store.dispatch('setColumn', newColumns);
         }
+    },
+    computed: {
+        keyPairs(): [string, string][] {
+            const keyPairs: [string, string][] = [];
+            for (let key1 in this.$store.state.columns) {
+                for (let key2 in this.$store.state.columns) {
+                    keyPairs.push([key1, key2]);
+                }
+            }
+            return keyPairs;
+        }
     }
 });
 </script>
+
+<style scoped lang="scss">
+.dashboard {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+</style>

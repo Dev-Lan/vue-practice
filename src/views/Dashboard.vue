@@ -36,6 +36,7 @@ export default defineComponent({
                 newColumns[key] = colVals;
             }
             this.$store.dispatch('setColumn', newColumns);
+            this.$store.dispatch('setSelected', -1);
         }
     },
     computed: {

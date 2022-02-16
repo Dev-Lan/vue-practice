@@ -1,11 +1,11 @@
 import { InjectionKey } from 'vue';
 import { createStore, Store } from 'vuex';
 
-interface Columns {
+export interface Columns {
     [index: string]: number[];
 }
 
-interface State {
+export interface State {
     columns: Columns;
     selectedIndex: number;
 }
@@ -13,7 +13,7 @@ interface State {
 // define injection key
 export const key: InjectionKey<Store<State>> = Symbol();
 
-export const store = createStore({
+export const store = createStore<State>({
     state: {
         columns: {
             A: [0, 1, 2, 3, 4, 5],
@@ -25,11 +25,17 @@ export const store = createStore({
     mutations: {
         SET_SELECTED(state, index: number) {
             state.selectedIndex = index;
+        },
+        SET_COLUMNS(state, columns: Columns) {
+            state.columns = columns;
         }
     },
     actions: {
         setSelected({ commit }, index: number) {
             commit('SET_SELECTED', index);
+        },
+        setColumn({ commit }, columns: Columns) {
+            commit('SET_COLUMNS', columns);
         }
     },
     modules: {}

@@ -68,7 +68,7 @@ svg {
 
 circle {
     border: solid black 1px;
-    r: 10px;
+    r: 5px;
 }
 
 circle.selected {

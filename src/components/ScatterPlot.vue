@@ -2,7 +2,7 @@
     <svg :width="width" :height="height">
         <g></g>
         <g></g>
-        <g>
+        <g :transform="`translate(${margin}, ${margin})`">
             <circle
                 v-for="([x, y], index) in points"
                 :key="index"
@@ -25,7 +25,8 @@ export default defineComponent({
         xAxis: { type: String, required: true },
         yAxis: { type: String, required: true },
         width: { type: Number, default: 300 },
-        height: { type: Number, default: 300 }
+        height: { type: Number, default: 300 },
+        margin: { type: Number, default: 40 }
     },
     methods: {
         onClick(index: number) {
@@ -40,7 +41,7 @@ export default defineComponent({
             const scale = d3
                 .scaleLinear()
                 .domain([0, 5])
-                .range([0, this.width]);
+                .range([0, this.vizWidth]);
 
             const xVals = this.$store.state.columns[this.xAxis];
             const yVals = this.$store.state.columns[this.yAxis];
@@ -49,6 +50,12 @@ export default defineComponent({
                 scale(xVals[i]),
                 scale(yVals[i])
             ]);
+        },
+        vizWidth(): number {
+            return this.width - 2 * this.margin;
+        },
+        vizHeight(): number {
+            return this.height - 2 * this.margin;
         }
     }
 });

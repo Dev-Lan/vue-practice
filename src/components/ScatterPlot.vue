@@ -7,12 +7,17 @@
         ></g>
         <g :transform="`translate(${margin}, ${margin})`">
             <circle
-                v-for="([x, y], index) in points"
-                :key="index"
+                v-for="[x, y, i] in points"
+                :key="i"
                 :cx="x"
                 :cy="y"
-                @click="onClick(index)"
-                :class="getCssClass(index)"
+                @click="onClick(i)"
+            />
+            <circle
+                v-if="selectedPoint"
+                :cx="selectedPoint[0]"
+                :cy="selectedPoint[1]"
+                :class="'selected'"
             />
         </g>
     </svg>
@@ -46,14 +51,30 @@ export default defineComponent({
             return scaleLinear().domain([0, 5]).range([vizHeight.value, 0]);
         });
 
-        const points = computed(() => {
+        const points = computed<[number, number, number][]>(() => {
             const xVals = store.state.columns[props.xKey];
             const yVals = store.state.columns[props.yKey];
 
-            return xVals.map((_d: number, i: number) => [
-                xScale.value(xVals[i]),
-                yScale.value(yVals[i])
-            ]);
+            const pointList = xVals
+                .map((_d: number, i: number) => [
+                    xScale.value(xVals[i]),
+                    yScale.value(yVals[i]),
+                    i
+                ])
+                .filter((_d, i) => i !== store.state.selectedIndex) as [
+                number,
+                number,
+                number
+            ][];
+            return pointList;
+        });
+
+        const selectedPoint = computed(() => {
+            const index = store.state.selectedIndex;
+            if (index === -1) return;
+            const xVals = store.state.columns[props.xKey];
+            const yVals = store.state.columns[props.yKey];
+            return [xScale.value(xVals[index]), yScale.value(yVals[index])];
         });
 
         const yAxis = ref<SVGGElement | null>(null);
@@ -68,15 +89,24 @@ export default defineComponent({
                 select(yAxis.value).call(yAxisGen);
             }
         });
-        return { vizWidth, vizHeight, points, yAxis, xAxis };
-    },
-    methods: {
-        onClick(index: number) {
-            this.$store.dispatch('setSelected', index);
-        },
-        getCssClass(index: number): string {
-            return index === this.$store.state.selectedIndex ? 'selected' : '';
+
+        function onClick(index: number) {
+            store.dispatch('setSelected', index);
         }
+
+        function getCssClass(index: number): string {
+            return index === store.state.selectedIndex ? 'selected' : '';
+        }
+        return {
+            vizWidth,
+            vizHeight,
+            points,
+            selectedPoint,
+            yAxis,
+            xAxis,
+            onClick,
+            getCssClass
+        };
     }
 });
 </script>

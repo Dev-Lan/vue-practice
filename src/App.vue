@@ -1,7 +1,7 @@
 <template>
     <div id="nav">
         <router-link to="/">Home</router-link> |
-        <router-link to="/dashboard">Dashboard</router-link>
+        <router-link to="/splom">Scatterplot Matrix</router-link>
     </div>
     <router-view />
 </template>

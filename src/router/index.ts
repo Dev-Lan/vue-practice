@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Home from '../views/Home.vue';
-import Dashboard from '../views/Dashboard.vue';
+import Splom from '../views/Splom.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -9,9 +9,9 @@ const routes: Array<RouteRecordRaw> = [
         component: Home,
     },
     {
-        path: '/dashboard',
-        name: 'Dashboard',
-        component: Dashboard,
+        path: '/splom',
+        name: 'Splom',
+        component: Splom,
     },
 ];
 

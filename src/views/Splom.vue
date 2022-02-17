@@ -2,7 +2,7 @@
     <div>
         <button @click="generateData">Generate New Data</button>
 
-        <div class="dashboard">
+        <div class="splom">
             <div v-for="(key1, i) in $store.state.columnHeaders" :key="i">
                 <ScatterPlot
                     v-for="(key2, i) in $store.state.columnHeaders"
@@ -22,7 +22,7 @@ import { Columns } from '@/store';
 // import { useStore } from 'vuex';
 
 export default defineComponent({
-    name: 'Dashboard',
+    name: 'Splom',
     components: {
         ScatterPlot,
     },
@@ -56,7 +56,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.dashboard {
+.splom {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;

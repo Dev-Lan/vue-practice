@@ -10,11 +10,10 @@
         ></g>
         <g
             ref="brushContainer"
-            :transform="`translate(${margin - dotRadius}, ${
-                margin - dotRadius
-            })`"
+            :transform="`translate(${margin}, ${margin})`"
         ></g>
         <g :transform="`translate(${margin}, ${margin})`">
+            <!-- <transition-group> -->
             <circle
                 v-for="[x, y, i] in normalPoints"
                 :key="i"
@@ -39,6 +38,7 @@
                 :r="dotRadius * 1.3"
                 :class="'selected'"
             />
+            <!-- </transition-group> -->
         </g>
     </svg>
 </template>
@@ -132,10 +132,7 @@ export default defineComponent({
                     brush()
                         .extent([
                             [0, 0],
-                            [
-                                vizWidth.value + 2 * dotRadius.value,
-                                vizHeight.value + 2 * dotRadius.value,
-                            ],
+                            [vizWidth.value, vizHeight.value],
                         ])
                         .on('brush start end', ({ selection }) => {
                             const bounds = selection as
@@ -153,20 +150,20 @@ export default defineComponent({
                             const yVals = [bounds[0][1], bounds[1][1]];
                             payload.filterList.push({
                                 low: min(yVals, (d: number) =>
-                                    yScale.value.invert(d)
+                                    yScale.value.invert(d + dotRadius.value)
                                 ) as number,
                                 high: max(yVals, (d: number) =>
-                                    yScale.value.invert(d)
+                                    yScale.value.invert(d - dotRadius.value)
                                 ) as number,
                                 key: props.yKey,
                             });
 
                             payload.filterList.push({
                                 low: min(xVals, (d: number) =>
-                                    xScale.value.invert(d)
+                                    xScale.value.invert(d - dotRadius.value)
                                 ) as number,
                                 high: max(xVals, (d: number) =>
-                                    xScale.value.invert(d)
+                                    xScale.value.invert(d + dotRadius.value)
                                 ) as number,
                                 key: props.xKey,
                             });

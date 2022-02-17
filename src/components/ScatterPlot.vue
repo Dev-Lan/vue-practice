@@ -13,24 +13,25 @@
             :transform="`translate(${margin}, ${margin})`"
         ></g>
         <g :transform="`translate(${margin}, ${margin})`">
-            <!-- <transition-group> -->
-            <circle
-                v-for="[x, y, i] in normalPoints"
-                :key="i"
-                :cx="x"
-                :cy="y"
-                :r="dotRadius"
-                @click="onClick(i)"
-            />
-            <circle
-                v-for="[x, y, i] in brushedPoints"
-                :key="i"
-                :cx="x"
-                :cy="y"
-                :r="dotRadius"
-                @click="onClick(i)"
-                :class="'brushed'"
-            />
+            <transition-group name="dot-slide" tag="g">
+                <circle
+                    v-for="[x, y, i] in normalPoints"
+                    :key="i"
+                    :cx="x"
+                    :cy="y"
+                    :r="dotRadius"
+                    @click="onClick(i)"
+                />
+                <circle
+                    v-for="[x, y, i] in brushedPoints"
+                    :key="i"
+                    :cx="x"
+                    :cy="y"
+                    :r="dotRadius"
+                    @click="onClick(i)"
+                    :class="'brushed'"
+                />
+            </transition-group>
             <circle
                 v-if="selectedPoint"
                 :cx="selectedPoint[0]"
@@ -38,7 +39,6 @@
                 :r="dotRadius * 1.3"
                 :class="'selected'"
             />
-            <!-- </transition-group> -->
         </g>
     </svg>
 </template>
@@ -214,4 +214,21 @@ circle.selected {
 circle.brushed {
     fill: bisque;
 }
+
+.dot-slide-move {
+    transition: transform 0.4s ease-out;
+}
+
+// .dot-slide-enter {
+//     // transform: translateX(10px);
+//     // opacity: 0;
+// }
+// .dot-slide-enter-active,
+// .dot-slide-leave-active {
+//     transition: all 0.2s ease;
+// }
+// .dot-slide-leave-to {
+//     // transform: translateX(-10px);
+//     // opacity: 0;
+// }
 </style>

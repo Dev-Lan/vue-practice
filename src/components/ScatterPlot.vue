@@ -61,7 +61,7 @@ export default defineComponent({
         yKey: { type: String, required: true },
         width: { type: Number, default: 360 },
         height: { type: Number, default: 360 },
-        margin: { type: Number, default: 40 }
+        margin: { type: Number, default: 40 },
     },
     setup(props) {
         const store = useStore<State>();
@@ -83,7 +83,7 @@ export default defineComponent({
             const pointList = xVals.map((_d: number, i: number) => [
                 xScale.value(xVals[i]),
                 yScale.value(yVals[i]),
-                i
+                i,
             ]) as [number, number, number][];
             return pointList;
         }
@@ -134,8 +134,8 @@ export default defineComponent({
                             [0, 0],
                             [
                                 vizWidth.value + 2 * dotRadius.value,
-                                vizHeight.value + 2 * dotRadius.value
-                            ]
+                                vizHeight.value + 2 * dotRadius.value,
+                            ],
                         ])
                         .on('brush start end', ({ selection }) => {
                             const bounds = selection as
@@ -143,7 +143,7 @@ export default defineComponent({
                                 | null;
                             const payload: FilterPayload = {
                                 componentId: uniqueId.value,
-                                filterList: []
+                                filterList: [],
                             };
                             if (!bounds) {
                                 store.dispatch('addFilter', payload);
@@ -158,7 +158,7 @@ export default defineComponent({
                                 high: max(yVals, (d: number) =>
                                     yScale.value.invert(d)
                                 ) as number,
-                                key: props.yKey
+                                key: props.yKey,
                             });
 
                             payload.filterList.push({
@@ -168,7 +168,7 @@ export default defineComponent({
                                 high: max(xVals, (d: number) =>
                                     xScale.value.invert(d)
                                 ) as number,
-                                key: props.xKey
+                                key: props.xKey,
                             });
                             store.dispatch('addFilter', payload);
                         })
@@ -195,9 +195,9 @@ export default defineComponent({
             brushContainer,
             onClick,
             getCssClass,
-            getPointList
+            getPointList,
         };
-    }
+    },
 });
 </script>
 

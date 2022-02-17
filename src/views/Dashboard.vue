@@ -24,7 +24,7 @@ import { Columns } from '@/store';
 export default defineComponent({
     name: 'Dashboard',
     components: {
-        ScatterPlot
+        ScatterPlot,
     },
     methods: {
         generateData(): void {
@@ -39,7 +39,7 @@ export default defineComponent({
             }
             this.$store.dispatch('setColumn', newColumns);
             this.$store.dispatch('setSelected', -1);
-        }
+        },
     },
     computed: {
         keyPairs(): [string, string][] {
@@ -50,8 +50,8 @@ export default defineComponent({
                 }
             }
             return keyPairs;
-        }
-    }
+        },
+    },
 });
 </script>
 

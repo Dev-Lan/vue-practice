@@ -75,13 +75,13 @@ export const store = createStore<State>({
         columns: {
             A: [0, 1, 2, 3, 4, 5],
             B: [5, 4, 3, 2, 1, 0],
-            C: [0, 1.1, 2.5, 3.1, 3, 2.5]
+            C: [0, 1.1, 2.5, 3.1, 3, 2.5],
         },
         columnHeaders: ['A', 'B', 'C'],
         normalIndices: [0, 1, 2, 3, 4],
         brushedIndices: [],
         selectedIndex: -1,
-        filters: {}
+        filters: {},
     },
     mutations: {
         SET_SELECTED(state, index: number) {
@@ -95,7 +95,7 @@ export const store = createStore<State>({
         ADD_FILTER(state, { componentId, filterList }: FilterPayload) {
             state.filters[componentId] = filterList;
             updateIndices(state);
-        }
+        },
     },
     actions: {
         setSelected({ commit }, index: number) {
@@ -106,8 +106,8 @@ export const store = createStore<State>({
         },
         addFilter({ commit }, filterPayload: FilterPayload) {
             commit('ADD_FILTER', filterPayload);
-        }
+        },
     },
     getters: {},
-    modules: {}
+    modules: {},
 });

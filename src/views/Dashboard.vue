@@ -3,21 +3,23 @@
         <button @click="generateData">Generate New Data</button>
 
         <div class="dashboard">
-            <ScatterPlot
-                v-for="([key1, key2], index) in keyPairs"
-                :key="index"
-                :yKey="key1"
-                :xKey="key2"
-            />
+            <div v-for="(key1, i) in $store.state.columnHeaders" :key="i">
+                <ScatterPlot
+                    v-for="(key2, i) in $store.state.columnHeaders"
+                    :key="i"
+                    :yKey="key1"
+                    :xKey="key2"
+                />
+            </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-// import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 import ScatterPlot from '@/components/ScatterPlot.vue';
 import { Columns } from '@/store';
+// import { useStore } from 'vuex';
 
 export default defineComponent({
     name: 'Dashboard',

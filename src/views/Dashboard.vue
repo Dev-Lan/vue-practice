@@ -31,7 +31,7 @@ export default defineComponent({
             const newColumns: Columns = {};
             for (let key of ['A', 'B', 'C']) {
                 const colVals: number[] = [];
-                for (let i = 0; i < 50; i++) {
+                for (let i = 0; i < 100; i++) {
                     const val = Math.random() * 5;
                     colVals.push(val);
                 }

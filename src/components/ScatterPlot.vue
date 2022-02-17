@@ -65,7 +65,7 @@ export default defineComponent({
     },
     setup(props) {
         const store = useStore<State>();
-        const dotRadius = ref(5);
+        const dotRadius = ref(4);
         const uniqueId = ref(uuidv4());
         const vizWidth = computed(() => props.width - 2 * props.margin);
         const vizHeight = computed(() => props.height - 2 * props.margin);

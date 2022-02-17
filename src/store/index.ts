@@ -3,7 +3,6 @@ import { createStore } from 'vuex';
 export interface Columns {
     [index: string]: number[];
 }
-
 export interface FilterPayload {
     componentId: string;
     filterList: Filter[];
@@ -78,7 +77,7 @@ export const store = createStore<State>({
             C: [0, 1.1, 2.5, 3.1, 3, 2.5],
         },
         columnHeaders: ['A', 'B', 'C'],
-        normalIndices: [0, 1, 2, 3, 4],
+        normalIndices: [0, 1, 2, 3, 4, 5],
         brushedIndices: [],
         selectedIndex: -1,
         filters: {},
@@ -96,6 +95,11 @@ export const store = createStore<State>({
             state.filters[componentId] = filterList;
             updateIndices(state);
         },
+        RESET_STATE(state) {
+            state.selectedIndex = -1;
+            state.filters = {};
+            updateIndices(state);
+        },
     },
     actions: {
         setSelected({ commit }, index: number) {
@@ -106,6 +110,9 @@ export const store = createStore<State>({
         },
         addFilter({ commit }, filterPayload: FilterPayload) {
             commit('ADD_FILTER', filterPayload);
+        },
+        resetState({ commit }) {
+            commit('RESET_STATE');
         },
     },
     getters: {},

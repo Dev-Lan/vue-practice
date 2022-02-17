@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, computed, ref } from 'vue';
+import { defineComponent, onMounted, computed, ref, onUnmounted } from 'vue';
 import { scaleLinear } from 'd3-scale';
 import { axisLeft, axisBottom } from 'd3-axis';
 import { select } from 'd3-selection';
@@ -128,13 +128,14 @@ export default defineComponent({
             }
 
             if (brushContainer.value) {
-                select(brushContainer.value).call(
+                const brushSelect = select(brushContainer.value);
+                brushSelect.call(
                     brush()
                         .extent([
                             [0, 0],
                             [vizWidth.value, vizHeight.value],
                         ])
-                        .on('brush start end', ({ selection }) => {
+                        .on('start brush end', ({ selection }) => {
                             const bounds = selection as
                                 | [[number, number], [number, number]]
                                 | null;
@@ -173,6 +174,10 @@ export default defineComponent({
             }
         });
 
+        onUnmounted(() => {
+            store.dispatch('resetState');
+        });
+
         function onClick(index: number) {
             store.dispatch('setSelected', index);
         }
@@ -203,6 +208,10 @@ svg {
     margin: 10px;
 }
 
+g {
+    user-select: none;
+}
+
 circle {
     stroke: black;
 }
@@ -218,17 +227,4 @@ circle.brushed {
 .dot-slide-move {
     transition: transform 0.4s ease-out;
 }
-
-// .dot-slide-enter {
-//     // transform: translateX(10px);
-//     // opacity: 0;
-// }
-// .dot-slide-enter-active,
-// .dot-slide-leave-active {
-//     transition: all 0.2s ease;
-// }
-// .dot-slide-leave-to {
-//     // transform: translateX(-10px);
-//     // opacity: 0;
-// }
 </style>
